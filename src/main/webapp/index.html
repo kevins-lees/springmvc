@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery.min1.9.0.js"></script>
+</head>
+<body>
+<input type="text" placeholder="请输入用户名" id="username"><br>
+<input type="password" placeholder="请输入密码" id="password"><br>
+<input type="password" placeholder="确认密码" id="password2"><br>
+<input type="file" id="file"><br>
+<input type="button" value="注册" id="zc">
+</body>
+<script>
+    $(function () {
+        $("#zc").click(function () {
+            var username=$("#username").val();
+            var password=$("#password").val();
+            var password2=$("#password2").val();
+            var file=$("#file")[0].files[0];
+            if(password!=password2){
+                alert("密码不一样")
+            }else {
+                var formData = new FormData();
+                formData.append("username",username);
+                formData.append("password",password);
+                formData.append("file",file);
+                $.ajax({
+                    url:"sy/user/insertUser.do",
+                    data:formData,
+                    type:"post",
+                    processData: false,
+                    contentType: false,
+                    dataType:  "json",
+                    success:function (date) {
+                        if(date.success){
+                            alert("注册成功")
+                            location.href="login.html"
+                        }else {
+                            alert(date.msg);
+                        }
+                    }
+                })
+            }
+
+        })
+
+
+
+    })
+</script>
+</html>

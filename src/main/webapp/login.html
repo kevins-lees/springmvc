@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery.min1.9.0.js"></script>
+</head>
+<body>
+<input type="text" placeholder="请输入用户名" id="username"><br>
+<input type="password" placeholder="请输入密码" id="password"><br>
+<input type="password" placeholder="确认密码" id="password2"><br>
+<input type="button" value="登录" id="login">
+</body>
+<script>
+    $(function () {
+
+        $("#login").click(function () {
+            var username=$("#username").val();
+            var password=$("#password").val();
+            var password2=$("#password2").val();
+            if(password!=password2){
+                alert("密码不一样")
+            }else {
+                $.ajax({
+                    url:"sy/user/login.do",
+                    data:{
+                        "username":username,
+                        "password":password
+                    },
+                    type:"post",
+                    dataType:  "json",
+                    success:function (date) {
+                        if(date.success){
+                            alert("登录成功")
+                            location.href="user.html"
+                        }else {
+                            alert(date.msg);
+                        }
+                    }
+                })
+            }
+
+        })
+
+    })
+</script>
+</html>
