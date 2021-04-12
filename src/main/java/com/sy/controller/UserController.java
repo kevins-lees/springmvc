@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @RequestMapping("/upload.do")
-    public @ResponseBody ResponseEntity<byte[]> doBiz10(HttpServletRequest request) throws Exception{
+    public ResponseEntity<byte[]> doBiz10(HttpServletRequest request) throws Exception{
         //来自服务器的文件
         User user = (User) request.getSession().getAttribute("user");
         String headImg = user.getHeadImg();
@@ -101,7 +101,7 @@ public class UserController {
         //设置头信息
         HttpHeaders headers = new HttpHeaders();
         //以附件的形式下载
-        headers.setContentDispositionFormData("attachment",headImg);
+        headers.setContentDispositionFormData("attachment",URLEncoder.encode(headImg,"utf-8"));
 
         return new ResponseEntity(bs ,headers, HttpStatus.OK);
     }
